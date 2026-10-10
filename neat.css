@@ -1,0 +1,670 @@
+/* ==========================================================================
+   Neater Bookmarks — popup theme
+   Modern light/dark design system.
+   All behaviour hooks driven by neat.js are preserved:
+   .open / .active / .focus / .searchFocus / .transitional / .needAlert /
+   .needConfirm / .needEdit / .rtl / .win / .mac / .linux / .chrome-536 /
+   body[data-zoom] / .hide-editables
+   ========================================================================== */
+
+:root{
+	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+
+	--bg: #f4f6fb;
+	--surface: #fff;
+	--surface-2: #f8fafc;
+	--menu-bg: rgba(255,255,255,.97);
+	--text: #0f172a;
+	--text-dim: #64748b;
+
+	--border: rgba(15,23,42,.08);
+	--border-strong: rgba(15,23,42,.14);
+
+	--hover: rgba(15,23,42,.055);
+	--hover-strong: rgba(15,23,42,.09);
+
+	--accent: #3b82f6;
+	--accent-strong: #2563eb;
+	--accent-soft: rgba(59,130,246,.14);
+	--accent-gradient: linear-gradient(135deg, #5b9bff, #3b78f0);
+	--accent-shadow: 0 2px 10px rgba(59,112,240,.35), inset 0 1px 0 rgba(255,255,255,.18);
+
+	--ring: 0 0 0 3px rgba(59,130,246,.18);
+	--shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+	--shadow-md: 0 14px 34px rgba(2,6,23,.16), 0 2px 8px rgba(2,6,23,.08);
+
+	--scrim: rgba(226,232,240,.55);
+	--scroll-thumb: rgba(100,116,139,.32);
+	--scroll-thumb-hover: rgba(100,116,139,.5);
+
+	--danger: #e5484d;
+	--danger-soft: rgba(229,72,77,.12);
+
+	--icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.6-3.6'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark){
+	:root{
+		--bg: #0f1523;
+		--surface: #161d2e;
+		--surface-2: #1b2334;
+		--menu-bg: rgba(26,34,52,.97);
+		--text: #e8edf7;
+		--text-dim: #93a1b8;
+
+		--border: rgba(255,255,255,.08);
+		--border-strong: rgba(255,255,255,.16);
+
+		--hover: rgba(255,255,255,.06);
+		--hover-strong: rgba(255,255,255,.1);
+
+		--accent: #5b9bff;
+		--accent-strong: #8ab6ff;
+		--accent-soft: rgba(91,155,255,.18);
+		--accent-shadow: 0 2px 12px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.14);
+
+		--ring: 0 0 0 3px rgba(91,155,255,.22);
+		--shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+		--shadow-md: 0 18px 44px rgba(0,0,0,.55), 0 2px 10px rgba(0,0,0,.4);
+
+		--scrim: rgba(8,12,20,.6);
+		--scroll-thumb: rgba(148,163,184,.28);
+		--scroll-thumb-hover: rgba(148,163,184,.45);
+
+		--danger: #ff6369;
+		--danger-soft: rgba(255,99,105,.16);
+
+		--icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.6-3.6'/%3E%3C/svg%3E");
+	}
+}
+
+body{
+	direction: __MSG_@@bidi_dir__;
+	font: 13px/1.5 var(--font-sans);
+	color: var(--text);
+	background-color: var(--bg);
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	overflow: hidden;
+	width: 320px;
+	height: 530px;
+	max-height: 530px; /* prevent double scrollbars in popup */
+	-webkit-font-smoothing: antialiased;
+}
+body.linux{
+	font-size: 12px;
+}
+body.transitional{
+	-webkit-transition-property: height;
+	transition-property: height;
+}
+body[data-zoom='90']>*:not(menu),
+body[data-zoom='90'] menu[type=context] button{
+	zoom: .9;
+}
+body[data-zoom='110']>*:not(menu),
+body[data-zoom='110'] menu[type=context] button{
+	zoom: 1.1;
+}
+body[data-zoom='120']>*:not(menu),
+body[data-zoom='120'] menu[type=context] button{
+	zoom: 1.2;
+}
+body[data-zoom='130']>*:not(menu),
+body[data-zoom='130'] menu[type=context] button{
+	zoom: 1.3;
+}
+body[data-zoom='140']>*:not(menu),
+body[data-zoom='140'] menu[type=context] button{
+	zoom: 1.4;
+}
+body[data-zoom='150']>*:not(menu),
+body[data-zoom='150'] menu[type=context] button{
+	zoom: 1.5;
+}
+input{
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font: inherit;
+}
+body.linux input{
+	font-size: 12px;
+}
+
+#container{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+/* ------------------------------------------------------------------ search */
+
+#search{
+	padding: 10px 10px 8px;
+}
+#search input{
+	width: 100%;
+	margin: 0;
+	padding: 8px 12px 8px 34px;
+	color: var(--text);
+	background-color: var(--surface);
+	background-image: var(--icon-search);
+	background-repeat: no-repeat;
+	background-position: 11px center;
+	background-size: 15px 15px;
+	border: 1px solid var(--border-strong);
+	border-radius: 10px;
+	box-shadow: var(--shadow-sm);
+	outline: 0;
+	-webkit-transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+	transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+#search input:hover{
+	border-color: rgba(15,23,42,.22);
+}
+#search input:focus{
+	border-color: var(--accent);
+	box-shadow: var(--ring);
+}
+#search input::placeholder{
+	color: var(--text-dim);
+}
+.rtl #search input{
+	background-position: right 11px center;
+	padding: 8px 34px 8px 12px;
+}
+
+/* ------------------------------------------------------------- tree/lists */
+
+#results,
+#tree{
+	outline: 0;
+	padding: 4px 6px 10px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+	position: relative;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+#results ul,
+#results ul li,
+#tree ul,
+#tree ul li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+#results ul li a,
+#tree ul li a,
+#tree ul li span{
+	display: block;
+	position: relative;
+	line-height: 1.4em;
+	padding: 5px 8px;
+	border-radius: 8px;
+	text-decoration: none;
+	color: var(--text);
+	outline: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	-webkit-transition: background-color .12s ease, color .12s ease, box-shadow .12s ease;
+	transition: background-color .12s ease, color .12s ease, box-shadow .12s ease;
+}
+#results ul li a *,
+#tree ul li a *,
+#tree ul li span *{
+	pointer-events: none;
+}
+#results ul li a:hover,
+#tree ul li a:hover,
+#tree ul li span:hover{
+	background-color: var(--hover);
+}
+
+/* folder twisty — rounded chevron */
+#tree ul li span .twisty{
+	display: inline-block;
+	position: relative;
+	width: 6px;
+	height: 6px;
+	border: 0;
+	border-top: 2px solid var(--text-dim);
+	border-right: 2px solid var(--text-dim);
+	border-radius: 1px;
+	margin: 0 4px;
+	vertical-align: middle;
+	-webkit-transition: -webkit-transform .18s ease, border-color .12s ease;
+	transition: transform .18s ease, border-color .12s ease;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+#tree ul li.open>span .twisty{
+	-webkit-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+.rtl #tree ul li span .twisty{
+	-webkit-transform: scaleX(-1) rotate(45deg);
+	transform: scaleX(-1) rotate(45deg);
+}
+.rtl #tree ul li.open>span .twisty{
+	-webkit-transform: scaleX(-1) rotate(135deg);
+	transform: scaleX(-1) rotate(135deg);
+}
+
+#results ul li a img,
+#results ul li span img,
+#tree ul li a img,
+#tree ul li span img{
+	margin-top: -2px;
+	vertical-align: middle;
+	border-radius: 4px;
+	margin-inline-end: 6px;
+}
+#results ul li a img,
+#tree ul li a img{
+	margin-inline-start: 16px;
+}
+#results ul li i,
+#tree ul li i{
+	font-style: normal;
+}
+
+/* selected / active / focused row */
+#results ul li a:active,
+#results ul li a.active,
+#results ul li a:focus,
+#tree ul li a:active,
+#tree ul li span:active,
+#tree ul li a.active,
+#tree ul li span.active,
+#tree ul li a:focus,
+#tree ul li span:focus{
+	color: #fff;
+	background-color: var(--accent);
+	background-image: var(--accent-gradient);
+	box-shadow: var(--accent-shadow);
+	outline: 0;
+}
+#tree ul li span:active .twisty,
+#tree ul li span.active .twisty,
+#tree ul li span:focus .twisty{
+	border-top-color: #fff;
+	border-right-color: #fff;
+}
+#tree ul li a:focus img,
+#tree ul li span:focus img,
+#tree ul li a.active img,
+#tree ul li span.active img{
+	box-shadow: 0 0 0 1px rgba(255,255,255,.35);
+}
+.searchFocus #results ul>li:first-child a{
+	background-color: var(--accent-soft);
+	box-shadow: inset 0 0 0 1px rgba(59,130,246,.25);
+}
+
+/* expand / collapse */
+#tree ul ul{
+	height: 0;
+	overflow: hidden;
+}
+#tree .open>ul{
+	height: auto;
+}
+
+/* flash a restored row */
+@-webkit-keyframes accentFade {
+	0%{
+		background-color: transparent;
+	}
+	10%{
+		background-color: var(--accent-soft);
+	}
+	100%{
+		background-color: transparent;
+	}
+}
+@keyframes accentFade {
+	0%{
+		background-color: transparent;
+	}
+	10%{
+		background-color: var(--accent-soft);
+	}
+	100%{
+		background-color: transparent;
+	}
+}
+#tree ul li a.focus,
+#tree ul li span.focus{
+	-webkit-animation-name: accentFade;
+	animation-name: accentFade;
+	-webkit-animation-duration: 3s;
+	animation-duration: 3s;
+}
+
+/* --------------------------------------------------------------- drag ghost */
+
+#bookmark-clone{
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	max-width: 250px;
+	position: absolute;
+	left: -999px;
+	margin: -1em 0 0 -24px;
+	white-space: nowrap;
+	line-height: 1em;
+	padding: .55em .8em;
+	border-radius: 10px;
+	background-color: var(--surface);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-md);
+	opacity: .96;
+	pointer-events: none;
+	cursor: default;
+}
+.rtl #bookmark-clone{
+	margin-left: 24px;
+}
+#bookmark-clone img{
+	vertical-align: text-top;
+	border-radius: 4px;
+}
+#bookmark-clone i{
+	font-style: normal;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#drop-overlay{
+	display: block;
+	width: 100%;
+	position: absolute;
+	left: -999px;
+	pointer-events: none;
+	margin: -1px 0 0;
+	box-sizing: border-box;
+}
+#drop-overlay.bookmark{
+	margin-inline-start: -3px;
+	height: 3px;
+	background-color: var(--accent);
+	border: 0;
+	border-radius: 3px;
+	box-shadow: 0 0 0 3px var(--accent-soft);
+}
+#drop-overlay.folder{
+	background-color: var(--accent-soft);
+	border: 1.5px solid var(--accent);
+	border-radius: 10px;
+}
+
+/* ------------------------------------------------------------ context menus */
+
+menu[type=context]{
+	-webkit-transition: opacity .18s ease;
+	transition: opacity .18s ease;
+	opacity: 0;
+	margin: 0;
+	padding: 6px;
+	list-style: none;
+	position: absolute;
+	left: -999px;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	background-color: var(--menu-bg);
+	box-shadow: var(--shadow-md);
+	-webkit-backdrop-filter: blur(20px) saturate(1.6);
+	backdrop-filter: blur(20px) saturate(1.6);
+	outline: 0;
+	max-width: 100%;
+}
+menu[type=context] button{
+	display: block;
+	width: 100%;
+	border: 0;
+	background: transparent;
+	font: inherit;
+	color: var(--text);
+	text-align: start;
+	padding: 7px 12px;
+	line-height: 20px;
+	border-radius: 8px;
+	text-shadow: none;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-webkit-transition: background-color .12s ease, color .12s ease;
+	transition: background-color .12s ease, color .12s ease;
+}
+menu[type=context] button:focus,
+menu[type=context] button:hover{
+	color: var(--accent-strong);
+	background-color: var(--accent-soft);
+	box-shadow: none;
+	outline: 0;
+}
+menu[type=context] button#bookmark-delete:focus,
+menu[type=context] button#bookmark-delete:hover,
+menu[type=context] button#folder-delete:focus,
+menu[type=context] button#folder-delete:hover{
+	color: var(--danger);
+	background-color: var(--danger-soft);
+}
+/* convert title-style to sentence-style capitalization, for Windows */
+.win menu[type=context] button{
+	text-transform: lowercase;
+}
+.win menu[type=context] button:first-letter{
+	text-transform: uppercase;
+}
+menu[type=context] hr{
+	border: 0;
+	padding: 0;
+	height: 1px;
+	margin: 5px 8px;
+	background-color: var(--border);
+	pointer-events: none;
+}
+menu[type=context].hide-editables hr,
+menu[type=context].hide-editables #folder-edit,
+menu[type=context].hide-editables #folder-delete{
+	display: none;
+}
+
+/* ----------------------------------------------------------------- resizer */
+
+#resizer{
+	position: absolute;
+	width: 4px;
+	height: 100%;
+	inset-inline-start: 0;
+	top: 0;
+	cursor: col-resize;
+	-webkit-transition: background-color .15s ease;
+	transition: background-color .15s ease;
+}
+#resizer:hover{
+	background-color: var(--accent-soft);
+}
+
+/* ------------------------------------------------------------------- cover */
+
+#cover{
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 100%;
+	opacity: 0;
+	background-color: var(--scrim);
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+}
+.transitional #cover{
+	-webkit-transition: opacity .3s ease;
+	transition: opacity .3s ease;
+}
+.needAlert #cover,
+.needConfirm #cover,
+.needEdit #cover{
+	left: 0;
+	opacity: 1;
+}
+
+/* ----------------------------------------------------------------- dialogs */
+
+.dialog{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: calc(100% - 32px);
+	max-height: calc(100% - 32px);
+	overflow-y: auto;
+	box-sizing: border-box;
+	opacity: 0;
+	pointer-events: none;
+	background-color: var(--surface);
+	padding: 18px;
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	box-shadow: var(--shadow-md);
+	-webkit-transform: translate(-50%, -50%) scale(.96);
+	transform: translate(-50%, -50%) scale(.96);
+}
+.transitional .dialog{
+	-webkit-transition-property: opacity, -webkit-transform;
+	-webkit-transition-duration: .22s;
+	transition-property: opacity, transform;
+	transition-duration: .22s;
+	transition-timing-function: cubic-bezier(.2, .8, .3, 1);
+}
+.dialog-text{
+	padding: 0;
+	margin: 0;
+	line-height: 1.55;
+	font-size: 13.5px;
+}
+.dialog .buttons{
+	margin: 16px 0 0;
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+.dialog .buttons button{
+	font: inherit;
+	font-weight: 600;
+	color: var(--text);
+	background-color: var(--surface-2);
+	border: 1px solid var(--border-strong);
+	border-radius: 10px;
+	padding: 8px 16px;
+	cursor: default;
+	-webkit-transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+	transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.dialog .buttons button:hover{
+	background-color: var(--hover-strong);
+}
+.dialog .buttons button:focus{
+	outline: 0;
+	box-shadow: var(--ring);
+}
+.dialog .buttons button:first-child{
+	color: #fff;
+	background-color: var(--accent);
+	background-image: var(--accent-gradient);
+	border-color: transparent;
+	box-shadow: var(--accent-shadow);
+}
+.dialog pre{
+	white-space: pre-line;
+	margin: 0;
+	padding: 10px 12px;
+	line-height: 1.3em;
+	-webkit-user-select: text;
+	user-select: text;
+	cursor: text;
+	background-color: var(--surface-2);
+	border-radius: 10px;
+	text-shadow: none;
+	overflow-x: auto;
+}
+
+#edit-dialog .dialog-text{
+	margin: 0 0 12px;
+	font-weight: 600;
+	font-size: 14px;
+}
+#edit-dialog input{
+	width: 100%;
+	padding: 9px 12px;
+	margin-bottom: 8px;
+	color: var(--text);
+	background-color: var(--surface-2);
+	border: 1px solid var(--border-strong);
+	border-radius: 10px;
+	outline: 0;
+	-webkit-transition: border-color .15s ease, box-shadow .15s ease;
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+#edit-dialog input:focus{
+	border-color: var(--accent);
+	box-shadow: var(--ring);
+}
+#edit-dialog input:invalid{
+	border-color: var(--danger);
+	box-shadow: 0 0 0 3px var(--danger-soft);
+}
+#edit-dialog .buttons{
+	margin: 6px 0 0;
+}
+#edit-dialog .buttons button{
+	width: 100%;
+	padding: 10px 16px;
+}
+
+.needAlert #alert-dialog,
+.needConfirm #confirm-dialog,
+.needEdit #edit-dialog{
+	opacity: 1;
+	pointer-events: auto;
+	-webkit-transform: translate(-50%, -50%) scale(1);
+	transform: translate(-50%, -50%) scale(1);
+}
+
+/* --------------------------------------------------------------- scrollbars */
+
+#tree::-webkit-scrollbar,
+#results::-webkit-scrollbar{
+	width: 10px;
+}
+#tree::-webkit-scrollbar-track,
+#results::-webkit-scrollbar-track{
+	background: transparent;
+}
+#tree::-webkit-scrollbar-thumb,
+#results::-webkit-scrollbar-thumb{
+	background-color: var(--scroll-thumb);
+	background-clip: content-box;
+	border: 3px solid transparent;
+	border-radius: 999px;
+}
+#tree::-webkit-scrollbar-thumb:hover,
+#results::-webkit-scrollbar-thumb:hover{
+	background-color: var(--scroll-thumb-hover);
+}

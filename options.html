@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="codemirror.css">
+<script src="options.js"></script>
+<script src="neatools.js"></script>
+<script src="codemirror.js"></script>
+</head>
+<body>
+<h1>
+	<img src="icon32.png" width="32" height="32" alt="">
+	<span id="extName"></span>
+	<span id="version"></span>
+	<small><span id="options"></span></small>
+</h1>
+<fieldset>
+	<legend id="general"></legend>
+	<div class="option-row">
+		<input type="checkbox" id="click-new-tab" />
+		<label for="click-new-tab" id="optionClickNewTab"></label>
+	</div>
+	<div class="option-row">
+		<input type="checkbox" id="open-new-tab-bg" />
+		<label for="open-new-tab-bg" id="optionOpenNewTab"></label>
+	</div>
+	<div class="option-row">
+		<input type="checkbox" id="close-unused-folders" />
+		<label for="close-unused-folders" id="optionCloseUnusedFolders"></label>
+	</div>
+	<div class="option-row">
+		<input type="checkbox" id="popup-stay-open" />
+		<label for="popup-stay-open" id="optionPopupStays"></label>
+	</div>
+	<div class="option-row">
+		<input type="checkbox" id="confirm-open-folder" />
+		<label for="confirm-open-folder" id="optionConfirmOpenFolder"></label>
+	</div>
+	<div class="option-row">
+		<input type="checkbox" id="remember-prev-state" />
+		<label for="remember-prev-state" id="optionRememberPrevState"></label>
+	</div>
+</fieldset>
+<fieldset>
+	<legend id="accessibility"></legend>
+	<div class="option-row">
+		<label id="optionZoom" for="zoom-input"></label>
+		<input type="number" min="90" max="150" step="10" value="100" id="zoom-input">
+		<span class="unit">%</span>
+	</div>
+</fieldset>
+<fieldset>
+	<legend id="customIcon"></legend>
+	<div class="option-row option-row-top">
+		<div id="custom-icon-preview"><img src="icon.png" width="19" height="19" alt=""></div>
+		<div class="option-row-body">
+			<label id="customIconText" for="custom-icon-file"></label> <input type="file" id="custom-icon-file">
+		</div>
+	</div>
+</fieldset>
+<fieldset>
+	<legend id="resetSettings"></legend>
+	<div class="option-row">
+		<span id="resetText"></span> <button type="button" id="reset-button" name="reset"><span id="reset"></span></button>
+	</div>
+</fieldset>
+<fieldset>
+	<legend id="customStyles"></legend>
+	<p class="hint"><span id="customStylesText"></span></p>
+	<textarea id="userstyle"></textarea>
+</fieldset>
+<footer id="footer">
+	<span id="optionsFooterText1"></span><br />
+	<span id="optionsFooterText2"></span><br />
+	<span id="optionsFooterText3"></span><br />
+	<span id="optionsFooterText4"></span><br />
+	<span id="optionsFooterText5"></span><br />
+	<span id="optionsFooterText6"></span><br />
+	<span id="optionsFooterText7"></span><br />
+</footer>
+</body>
+</html>
